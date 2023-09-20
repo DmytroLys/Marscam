@@ -57,20 +57,16 @@ class LaunchViewController: UIViewController {
         animationView?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -114).isActive = true
         animationView?.heightAnchor.constraint(equalToConstant: 34).isActive = true
         animationView?.widthAnchor.constraint(equalToConstant: 222).isActive = true
-        
         animationView?.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
         
         animationView!.play()
     }
     
     func navigateToMainViewController() {
-        let mainVC = ViewController()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainVC = storyboard.instantiateViewController(identifier: "ViewController")
         mainVC.modalPresentationStyle = .fullScreen
         mainVC.modalTransitionStyle = .crossDissolve
         self.present(mainVC, animated: true, completion: nil)
     }
-    
-    
-    
 }
