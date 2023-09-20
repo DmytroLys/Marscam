@@ -9,10 +9,21 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // MARK: - Properties
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.isHidden = true
+        
     }
 
 
+    @objc func calendarPickerDidTapped(_ sender: Any) {
+        
+        print(#function)
+    }
+    
 }
 

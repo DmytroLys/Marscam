@@ -18,13 +18,12 @@ class LaunchViewController: UIViewController {
         super.viewDidLoad()
         configureLogoView()
         configureAnimation()
-        print("Loaded")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { timer in
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { timer in
             self.navigateToMainViewController()
         }
         
@@ -64,7 +63,7 @@ class LaunchViewController: UIViewController {
     
     func navigateToMainViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainVC = storyboard.instantiateViewController(identifier: "ViewController")
+        let mainVC = storyboard.instantiateViewController(identifier: "NavigationController")
         mainVC.modalPresentationStyle = .fullScreen
         mainVC.modalTransitionStyle = .crossDissolve
         self.present(mainVC, animated: true, completion: nil)
