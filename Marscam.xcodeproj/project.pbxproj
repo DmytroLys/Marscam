@@ -14,6 +14,9 @@
 		66B8F8322ABB25A000B79083 /* Marscam.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66B8F8302ABB25A000B79083 /* Marscam.xcdatamodeld */; };
 		66B8F8342ABB25A300B79083 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66B8F8332ABB25A300B79083 /* Assets.xcassets */; };
 		66B8F8372ABB25A300B79083 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B8F8352ABB25A300B79083 /* LaunchScreen.storyboard */; };
+		66B8F8442ABB2E0400B79083 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 66B8F8432ABB2E0400B79083 /* Lottie */; };
+		66B8F8472ABB2ED200B79083 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B8F8452ABB2ED200B79083 /* LaunchViewController.swift */; };
+		66B8F84A2ABB320000B79083 /* Loader_Test.json in Resources */ = {isa = PBXBuildFile; fileRef = 66B8F8492ABB320000B79083 /* Loader_Test.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,8 @@
 		66B8F8332ABB25A300B79083 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66B8F8362ABB25A300B79083 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66B8F8382ABB25A300B79083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66B8F8452ABB2ED200B79083 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		66B8F8492ABB320000B79083 /* Loader_Test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Loader_Test.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66B8F8442ABB2E0400B79083 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +69,7 @@
 				66B8F8402ABB260B00B79083 /* View */,
 				66B8F83F2ABB260100B79083 /* Model */,
 				66B8F8382ABB25A300B79083 /* Info.plist */,
+				66B8F8492ABB320000B79083 /* Loader_Test.json */,
 			);
 			path = Marscam;
 			sourceTree = "<group>";
@@ -98,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				66B8F82B2ABB25A000B79083 /* ViewController.swift */,
+				66B8F8452ABB2ED200B79083 /* LaunchViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -118,6 +126,9 @@
 			dependencies = (
 			);
 			name = Marscam;
+			packageProductDependencies = (
+				66B8F8432ABB2E0400B79083 /* Lottie */,
+			);
 			productName = Marscam;
 			productReference = 66B8F8242ABB25A000B79083 /* Marscam.app */;
 			productType = "com.apple.product-type.application";
@@ -146,6 +157,9 @@
 				Base,
 			);
 			mainGroup = 66B8F81B2ABB25A000B79083;
+			packageReferences = (
+				66B8F8422ABB2E0400B79083 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 66B8F8252ABB25A000B79083 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -162,6 +176,7 @@
 			files = (
 				66B8F8372ABB25A300B79083 /* LaunchScreen.storyboard in Resources */,
 				66B8F8342ABB25A300B79083 /* Assets.xcassets in Resources */,
+				66B8F84A2ABB320000B79083 /* Loader_Test.json in Resources */,
 				66B8F82F2ABB25A000B79083 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66B8F8322ABB25A000B79083 /* Marscam.xcdatamodeld in Sources */,
+				66B8F8472ABB2ED200B79083 /* LaunchViewController.swift in Sources */,
 				66B8F82C2ABB25A000B79083 /* ViewController.swift in Sources */,
 				66B8F8282ABB25A000B79083 /* AppDelegate.swift in Sources */,
 				66B8F82A2ABB25A000B79083 /* SceneDelegate.swift in Sources */,
@@ -404,6 +420,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		66B8F8422ABB2E0400B79083 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		66B8F8432ABB2E0400B79083 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66B8F8422ABB2E0400B79083 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		66B8F8302ABB25A000B79083 /* Marscam.xcdatamodeld */ = {
