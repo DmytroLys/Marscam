@@ -8,7 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     // MARK: - Properties
     
     @IBOutlet weak var tableView: UITableView!
@@ -29,10 +29,10 @@ class ViewController: UIViewController {
         
     }
     
-   private func convertDateString(_ input: String) -> String? {
+    private func convertDateString(_ input: String) -> String? {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd"
-
+        
         if let date = inputFormatter.date(from: input) {
             let outputFormatter = DateFormatter()
             outputFormatter.dateFormat = "MMMM dd, yyyy"
@@ -48,6 +48,17 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let url = photosList[indexPath.row].img_src
+        
+        let imageView = UIImageView()
+        imageView.loadImage(from: url)
+        let fullScreenVC = FullScreenImageViewController(imageView: imageView)
+        fullScreenVC.modalPresentationStyle = .overFullScreen
+        self.present(fullScreenVC, animated: true, completion: nil)
+        
+    }
 }
 // MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
@@ -57,7 +68,7 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! ImageCell
-
+        
         let cellRoverName = photosList[indexPath.row].rover.name
         let cellCameraType = photosList[indexPath.row].camera.full_name
         let cellDay = photosList[indexPath.row].earth_date
@@ -72,7 +83,7 @@ extension ViewController: UITableViewDataSource {
         cell.setImageView(url: imageURL)
         cell.setRoverName(name: cellRoverName)
         cell.setCameraTypeLabel(type: cellCameraType)
-
+        
         return cell
     }
 }
