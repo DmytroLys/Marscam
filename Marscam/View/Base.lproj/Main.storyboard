@@ -19,6 +19,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="backgroundOne"/>
                     </view>
+                    <connections>
+                        <segue destination="D6W-81-y32" kind="presentation" identifier="goToNext" modalPresentationStyle="fullScreen" id="Qmy-ON-29j"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -33,7 +36,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uuu-ER-6Ec">
-                                <rect key="frame" x="0.0" y="92" width="414" height="148"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MARS.CAMERA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="pJS-gz-40q">
                                         <rect key="frame" x="19" y="2" width="268.5" height="41"/>
@@ -231,7 +234,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FT0-pn-62t">
-                                <rect key="frame" x="0.0" y="240" width="414" height="656"/>
+                                <rect key="frame" x="0.0" y="148" width="414" height="748"/>
                                 <color key="backgroundColor" name="backgroundOne"/>
                             </tableView>
                         </subviews>
@@ -278,6 +281,9 @@
             <point key="canvasLocation" x="1000.763358778626" y="-4.2253521126760569"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Qmy-ON-29j"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="add" width="48" height="48"/>
         <image name="calendar" width="88" height="88"/>

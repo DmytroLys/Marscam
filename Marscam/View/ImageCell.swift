@@ -13,7 +13,7 @@ class ImageCell: UITableViewCell {
    @IBOutlet private weak var roverNameLabel: UILabel!
    @IBOutlet private weak var cameraTypeLabel: UILabel!
    @IBOutlet private weak var dateLabel: UILabel!
-   @IBOutlet private weak var imageName: UIImageView!
+   @IBOutlet private weak var photo: UIImageView!
     
     
     override func awakeFromNib() {
@@ -85,6 +85,10 @@ class ImageCell: UITableViewCell {
         attributedString.append(NSAttributedString(string: date, attributes: dateAttributes))
         
         dateLabel.attributedText = attributedString
+    }
+    
+    func setImageView(url:URL) {
+        photo.loadImage(from: url)
     }
     
     

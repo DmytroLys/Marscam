@@ -86,7 +86,7 @@
                 <outlet property="cameraTypeLabel" destination="wOp-k1-OUA" id="KvY-wK-ejF"/>
                 <outlet property="dateLabel" destination="ve1-O4-0wQ" id="Mbr-ye-aSW"/>
                 <outlet property="imageBubble" destination="fNz-0H-i3G" id="eqo-8h-TDH"/>
-                <outlet property="imageName" destination="Izy-aD-hkE" id="5TU-ho-f8x"/>
+                <outlet property="photo" destination="Izy-aD-hkE" id="5TU-ho-f8x"/>
                 <outlet property="roverNameLabel" destination="SW0-xt-DXF" id="z0u-Wi-6ii"/>
             </connections>
             <point key="canvasLocation" x="319.84732824427482" y="-205.28169014084509"/>

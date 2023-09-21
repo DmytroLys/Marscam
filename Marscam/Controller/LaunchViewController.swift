@@ -8,24 +8,50 @@
 import UIKit
 import Lottie
 
-class LaunchViewController: UIViewController {
+class LaunchViewController: UIViewController,APIManagerDelegate {
+    
+    func didUpdatePhotos(_ apiManager: APIManager, photos: [Photo]) {
+        photosList = photos
+        
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "goToNext", sender: self)
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        printContent(error)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToNext" {
+            let destinationVC = segue.destination as? ViewController
+            destinationVC?.photosList = photosList
+        }
+    }
+    
+
+    
     
     
     var logoView: UIView!
     private var animationView: LottieAnimationView?
+    private var apiManager = APIManager()
+    private var photosList: [Photo] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLogoView()
         configureAnimation()
+        apiManager.delegate = self
+        apiManager.fetchPhotos()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { timer in
-            self.navigateToMainViewController()
-        }
+        //        Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { timer in
+        //            self.navigateToMainViewController()
+        //        }
         
     }
     
@@ -61,11 +87,11 @@ class LaunchViewController: UIViewController {
         animationView!.play()
     }
     
-    func navigateToMainViewController() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainVC = storyboard.instantiateViewController(identifier: "NavigationController")
-        mainVC.modalPresentationStyle = .fullScreen
-        mainVC.modalTransitionStyle = .crossDissolve
-        self.present(mainVC, animated: true, completion: nil)
-    }
+    //    func navigateToMainViewController() {
+    //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    //        let mainVC = storyboard.instantiateViewController(identifier: "NavigationController")
+    //        mainVC.modalPresentationStyle = .fullScreen
+    //        mainVC.modalTransitionStyle = .crossDissolve
+    //        self.present(mainVC, animated: true, completion: nil)
+    //    }
 }

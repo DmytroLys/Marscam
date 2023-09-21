@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var dateLabel: UILabel!
     private var apiManager = APIManager()
-    private var photosList: [Photo] = []
+    var photosList: [Photo] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,6 @@ class ViewController: UIViewController {
         tableView.register(UINib(nibName: "ImageCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
         tableView.separatorStyle = .none
         
-        apiManager.fetchPhotos()
     }
     
    private func convertDateString(_ input: String) -> String? {
@@ -62,11 +61,15 @@ extension ViewController: UITableViewDataSource {
         let cellRoverName = photosList[indexPath.row].rover.name
         let cellCameraType = photosList[indexPath.row].camera.full_name
         let cellDay = photosList[indexPath.row].earth_date
+        let imageURL = photosList[indexPath.row].img_src
+        
+        
         
         if let convertDate = convertDateString(cellDay) {
             cell.setDateLabel(date: convertDate)
         }
         
+        cell.setImageView(url: imageURL)
         cell.setRoverName(name: cellRoverName)
         cell.setCameraTypeLabel(type: cellCameraType)
 
