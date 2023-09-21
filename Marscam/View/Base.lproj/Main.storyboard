@@ -70,7 +70,7 @@
                                             <constraint firstItem="Ebh-7g-zMU" firstAttribute="leading" secondItem="HyF-dP-6g5" secondAttribute="leading" id="xZA-Z5-90z"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="June 6, 2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETR-Y3-lJV">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="September 18, 2023" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETR-Y3-lJV">
                                         <rect key="frame" x="19" y="45" width="208" height="21"/>
                                         <color key="backgroundColor" name="accentOne"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -251,6 +251,7 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="dateLabel" destination="ETR-Y3-lJV" id="AAR-CN-DKl"/>
                         <outlet property="tableView" destination="FT0-pn-62t" id="eRf-PU-Ovl"/>
                     </connections>
                 </viewController>

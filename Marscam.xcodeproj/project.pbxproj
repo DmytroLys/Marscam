@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66B5C0052ABCC66200838570 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5C0042ABCC66200838570 /* Constants.swift */; };
+		66B5C0092ABCD1A000838570 /* MarsPhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5C0082ABCD1A000838570 /* MarsPhotosModel.swift */; };
+		66B5C00D2ABCD3BB00838570 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5C00C2ABCD3BB00838570 /* APIManager.swift */; };
 		66B8F8282ABB25A000B79083 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B8F8272ABB25A000B79083 /* AppDelegate.swift */; };
 		66B8F82A2ABB25A000B79083 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B8F8292ABB25A000B79083 /* SceneDelegate.swift */; };
 		66B8F82C2ABB25A000B79083 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B8F82B2ABB25A000B79083 /* ViewController.swift */; };
@@ -22,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		66B5C0042ABCC66200838570 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		66B5C0082ABCD1A000838570 /* MarsPhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarsPhotosModel.swift; sourceTree = "<group>"; };
+		66B5C00C2ABCD3BB00838570 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		66B8F8242ABB25A000B79083 /* Marscam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marscam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66B8F8272ABB25A000B79083 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66B8F8292ABB25A000B79083 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +55,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66B5C00A2ABCD38700838570 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				66B5C0042ABCC66200838570 /* Constants.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		66B5C00B2ABCD3A700838570 /* APIManager */ = {
+			isa = PBXGroup;
+			children = (
+				66B5C00C2ABCD3BB00838570 /* APIManager.swift */,
+			);
+			path = APIManager;
+			sourceTree = "<group>";
+		};
 		66B8F81B2ABB25A000B79083 = {
 			isa = PBXGroup;
 			children = (
@@ -68,7 +90,9 @@
 		66B8F8262ABB25A000B79083 /* Marscam */ = {
 			isa = PBXGroup;
 			children = (
+				66B5C00A2ABCD38700838570 /* Utility */,
 				66B8F83E2ABB25DE00B79083 /* Supporting */,
+				66B5C00B2ABCD3A700838570 /* APIManager */,
 				66B8F8412ABB261900B79083 /* Controller */,
 				66B8F8402ABB260B00B79083 /* View */,
 				66B8F83F2ABB260100B79083 /* Model */,
@@ -92,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				66B8F8302ABB25A000B79083 /* Marscam.xcdatamodeld */,
+				66B5C0082ABCD1A000838570 /* MarsPhotosModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -196,9 +221,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				66B8F8322ABB25A000B79083 /* Marscam.xcdatamodeld in Sources */,
+				66B5C0092ABCD1A000838570 /* MarsPhotosModel.swift in Sources */,
 				66B8F8472ABB2ED200B79083 /* LaunchViewController.swift in Sources */,
+				66B5C00D2ABCD3BB00838570 /* APIManager.swift in Sources */,
 				66B8F82C2ABB25A000B79083 /* ViewController.swift in Sources */,
 				66B8F8282ABB25A000B79083 /* AppDelegate.swift in Sources */,
+				66B5C0052ABCC66200838570 /* Constants.swift in Sources */,
 				66B8F82A2ABB25A000B79083 /* SceneDelegate.swift in Sources */,
 				66B8F8552ABC2F7500B79083 /* ImageCell.swift in Sources */,
 			);
