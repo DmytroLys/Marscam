@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct MarsPhotosModel: Codable {
     let photos: [Photo]

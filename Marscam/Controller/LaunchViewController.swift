@@ -8,31 +8,9 @@
 import UIKit
 import Lottie
 
-class LaunchViewController: UIViewController,APIManagerDelegate {
-    
-    func didUpdatePhotos(_ apiManager: APIManager, photos: [Photo]) {
-        photosList = photos
-        
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "goToNext", sender: self)
-        }
-    }
-    
-    func didFailWithError(error: Error) {
-        printContent(error)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToNext" {
-            let destinationVC = segue.destination as? ViewController
-            destinationVC?.photosList = photosList
-        }
-    }
+class LaunchViewController: UIViewController {
     
 
-    
-    
-    
     var logoView: UIView!
     private var animationView: LottieAnimationView?
     private var apiManager = APIManager()
@@ -46,16 +24,14 @@ class LaunchViewController: UIViewController,APIManagerDelegate {
         apiManager.fetchPhotos()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        //        Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { timer in
-        //            self.navigateToMainViewController()
-        //        }
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToMain" {
+            let destinationVC = segue.destination as? ViewController
+            destinationVC?.photosList = photosList
+        }
     }
     
-    func configureLogoView() {
+   private func configureLogoView() {
         logoView = UIView()
         view.addSubview(logoView)
         
@@ -68,7 +44,7 @@ class LaunchViewController: UIViewController,APIManagerDelegate {
         logoView.backgroundColor = UIColor(named: "accentOne")
     }
     
-    func configureAnimation() {
+   private func configureAnimation() {
         
         animationView = LottieAnimationView(name: "Loader_Test")
         animationView!.contentMode = .scaleAspectFill
@@ -86,12 +62,18 @@ class LaunchViewController: UIViewController,APIManagerDelegate {
         
         animationView!.play()
     }
+}
+
+extension LaunchViewController :APIManagerDelegate {
+    func didUpdatePhotos(_ apiManager: APIManager, photos: [Photo]) {
+        photosList = photos
+        
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "goToMain", sender: self)
+        }
+    }
     
-    //    func navigateToMainViewController() {
-    //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //        let mainVC = storyboard.instantiateViewController(identifier: "NavigationController")
-    //        mainVC.modalPresentationStyle = .fullScreen
-    //        mainVC.modalTransitionStyle = .crossDissolve
-    //        self.present(mainVC, animated: true, completion: nil)
-    //    }
+    func didFailWithError(error: Error) {
+        printContent(error)
+    }
 }

@@ -1,23 +1,23 @@
 //
-//  ImageCell.swift
+//  FilterTableViewCell.swift
 //  Marscam
 //
-//  Created by Dmytro Lyshtva on 21.09.2023.
+//  Created by Dmytro Lyshtva on 22.09.2023.
 //
 
 import UIKit
 
-class ImageCell: UITableViewCell {
+class FilterTableViewCell: UITableViewCell {
+
+    @IBOutlet private weak var cellBubble: UIView!
+    @IBOutlet private weak var roverNameLabel: UILabel!
     
-   @IBOutlet private weak var cellBubble: UIView!
-   @IBOutlet private weak var roverNameLabel: UILabel!
-   @IBOutlet private weak var cameraTypeLabel: UILabel!
-   @IBOutlet private weak var dateLabel: UILabel!
-   @IBOutlet private weak var photo: UIImageView!
-    
+    @IBOutlet private weak var cameraNameLabel: UILabel!
+    @IBOutlet private weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         cellBubble.layer.cornerRadius = 20
         selectionStyle = .none
         
@@ -26,11 +26,11 @@ class ImageCell: UITableViewCell {
         cellBubble.layer.shadowOpacity = 0.30
         cellBubble.layer.shadowColor = UIColor(named: "layerTwo")?.cgColor
         cellBubble.layer.shadowOffset = CGSize(width: 0, height: 5)
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+
     }
     
     func setRoverName(name: String) {
@@ -40,7 +40,7 @@ class ImageCell: UITableViewCell {
     
     func setCameraTypeLabel(type: String) {
         
-        cameraTypeLabel.attributedText = returnAttributedStringWithTitle(with: "Camera:  ", type: type)
+        cameraNameLabel.attributedText = returnAttributedStringWithTitle(with: "Camera:  ", type: type)
     }
     
     func setDateLabel(date: String) {
@@ -48,9 +48,6 @@ class ImageCell: UITableViewCell {
         dateLabel.attributedText = returnAttributedStringWithTitle(with: "Date:  ", type: date)
     }
     
-    func setImageView(url:URL) {
-        photo.loadImage(from: url)
-    }
     
     private func returnAttributedStringWithTitle(with title: String, type: String) -> NSMutableAttributedString {
         let titleAttributes: [NSAttributedString.Key: Any] = [
@@ -69,6 +66,5 @@ class ImageCell: UITableViewCell {
         
         return attributedString
     }
-    
     
 }

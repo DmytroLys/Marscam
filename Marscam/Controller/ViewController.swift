@@ -6,12 +6,32 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController {
     
     // MARK: - Properties
     
     @IBOutlet weak var tableView: UITableView!
+    
+    private var roverName: String = "All" {
+        didSet {
+            
+        }
+    }
+    
+    private var cameraName: String = "All" {
+        didSet {
+            
+        }
+    }
+    
+    private var date: String = "" {
+        didSet {
+            dateLabel.text = date
+        }
+    }
+    
     
     @IBOutlet private weak var dateLabel: UILabel!
     private var apiManager = APIManager()
@@ -41,6 +61,52 @@ class ViewController: UIViewController {
             return nil
         }
     }
+    
+    @IBAction func addHistoryTapped(_ sender: UIButton) {
+        
+        let ac = UIAlertController(title: "Save Filters", message: "The current filters and the date you have chosen can be saved to the filter history.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: saveFunction))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+    
+        present(ac,animated: true)
+    }
+    
+    func saveFunction(action: UIAlertAction) {
+        
+        let history = FilterHistory()
+        history.date = dateLabel.text!
+        history.roverName = roverName
+        history.cameraName = roverName
+        
+        let realm = try! Realm()
+        
+        try! realm.write {
+            realm.add(history)
+        }
+    }
+    
+    @IBAction func goToHistoryTapped(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "goToHistory", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToHistory" {
+            let destinationVC = segue.destination as? HistoryViewController
+            
+            let realm = try! Realm()
+            
+            let filterHistory = realm.objects(FilterHistory.self)
+            
+            
+            let arrayFilters = Array(filterHistory)
+            print(arrayFilters)
+            
+            destinationVC?.filtersHistoryList = arrayFilters
+        }
+    }
+    
+    
+    
 }
 
 
@@ -56,6 +122,7 @@ extension ViewController: UITableViewDelegate {
         imageView.loadImage(from: url)
         let fullScreenVC = FullScreenImageViewController(imageView: imageView)
         fullScreenVC.modalPresentationStyle = .overFullScreen
+        fullScreenVC.modalPresentationCapturesStatusBarAppearance = true
         self.present(fullScreenVC, animated: true, completion: nil)
         
     }
@@ -73,8 +140,6 @@ extension ViewController: UITableViewDataSource {
         let cellCameraType = photosList[indexPath.row].camera.full_name
         let cellDay = photosList[indexPath.row].earth_date
         let imageURL = photosList[indexPath.row].img_src
-        
-        
         
         if let convertDate = convertDateString(cellDay) {
             cell.setDateLabel(date: convertDate)
@@ -101,7 +166,5 @@ extension ViewController : APIManagerDelegate {
     func didFailWithError(error: Error) {
         print(error.localizedDescription)
     }
-    
-    
 }
 

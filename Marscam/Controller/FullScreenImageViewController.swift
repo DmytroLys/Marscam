@@ -14,6 +14,7 @@ class FullScreenImageViewController: UIViewController {
     var imageView: UIImageView!
     var backButton: UIButton!
     
+    
     // MARK: - Init
     init(imageView: UIImageView) {
         super.init(nibName: nil, bundle: nil)
@@ -27,15 +28,12 @@ class FullScreenImageViewController: UIViewController {
     // MARK: - Lifecycle method
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
-        
+        view.backgroundColor = UIColor(named: "layerOne")
         cofigureImageView()
         configureButton()
     }
     
     func cofigureImageView () {
-        
         imageView.frame = view.bounds
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true

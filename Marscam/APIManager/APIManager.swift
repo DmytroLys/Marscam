@@ -54,7 +54,6 @@ struct APIManager {
             let decodedData = try decoder.decode(MarsPhotosModel.self, from: photosData)
             
             let photos = decodedData.photos
-            print(photos)
             return photos
             
         } catch {
