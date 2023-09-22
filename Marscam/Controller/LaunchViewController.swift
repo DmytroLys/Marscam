@@ -11,7 +11,7 @@ import Lottie
 class LaunchViewController: UIViewController {
     
 
-    var logoView: UIView!
+    private var logoView: UIView!
     private var animationView: LottieAnimationView?
     private var apiManager = APIManager()
     private var photosList: [Photo] = []

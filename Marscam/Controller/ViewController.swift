@@ -12,7 +12,9 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
+    
+    let datePicker = UIDatePicker()
     
     private var roverName: String = "All" {
         didSet {
@@ -49,6 +51,15 @@ class ViewController: UIViewController {
         
     }
     
+    
+    @IBAction func roverFilterTapped(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func cameraFilterTapped(_ sender: UIButton) {
+        
+    }
+    
     private func convertDateString(_ input: String) -> String? {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd"
@@ -56,6 +67,7 @@ class ViewController: UIViewController {
         if let date = inputFormatter.date(from: input) {
             let outputFormatter = DateFormatter()
             outputFormatter.dateFormat = "MMMM dd, yyyy"
+            outputFormatter.locale = Locale(identifier: "en_US")
             return outputFormatter.string(from: date)
         } else {
             return nil
@@ -99,7 +111,6 @@ class ViewController: UIViewController {
             
             
             let arrayFilters = Array(filterHistory)
-            print(arrayFilters)
             
             destinationVC?.filtersHistoryList = arrayFilters
         }

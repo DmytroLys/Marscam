@@ -15,6 +15,4 @@ class FilterHistory: Object {
     @Persisted var cameraName: String = ""
     @Persisted var date: String = ""
     
-     let urlList = List<String>()
-    
 }
