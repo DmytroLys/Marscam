@@ -40,7 +40,6 @@ class ViewController: UIViewController {
     @IBOutlet private weak var cameraNameLabel: UILabel!
     
     private var apiManager = APIManager()
-    private var 
     var photosList: [Photo] = []
     
     override func viewDidLoad() {
