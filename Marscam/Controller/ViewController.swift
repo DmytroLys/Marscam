@@ -41,8 +41,16 @@ class ViewController: UIViewController {
     private var apiManager = APIManager()
     var photosList: [Photo] = []
     
+    var filteredPhotosList: [Photo] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        filteredPhotosList = photosList
         
         navigationController?.navigationBar.isHidden = true
         apiManager.delegate = self
@@ -72,6 +80,16 @@ class ViewController: UIViewController {
         let modalVC = PopUpModalViewController.present(initialView: self, delegate: self, style: .date)
         modalVC.modalTitle = "Date"
         modalVC.context = .date
+    }
+    
+    func filterBasedOnSelection() {
+        if roverName != "All" {
+            filteredPhotosList = photosList.filter({ $0.rover.name == roverName })
+        } else if cameraName != "All" {
+            filteredPhotosList = photosList.filter({ $0.camera.full_name == cameraName })
+        } else {
+            filteredPhotosList = photosList
+        }
     }
     
     func setView(view: UIView, hidden: Bool) {
@@ -161,16 +179,16 @@ extension ViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosList.count
+        return filteredPhotosList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ImageCell.cellReuseIdentifier, for: indexPath) as! ImageCell
         
-        let cellRoverName = photosList[indexPath.row].rover.name
-        let cellCameraType = photosList[indexPath.row].camera.full_name
-        let cellDay = photosList[indexPath.row].earth_date
-        let imageURL = photosList[indexPath.row].img_src
+        let cellRoverName = filteredPhotosList[indexPath.row].rover.name
+        let cellCameraType = filteredPhotosList[indexPath.row].camera.full_name
+        let cellDay = filteredPhotosList[indexPath.row].earth_date
+        let imageURL = filteredPhotosList[indexPath.row].img_src
         
         if let convertDate = convertDateString(cellDay) {
             cell.setDateLabel(date: convertDate)
@@ -190,8 +208,9 @@ extension ViewController : APIManagerDelegate {
     func didUpdatePhotos(_ apiManager: APIManager, photos: [Photo]) {
     
         photosList = photos
+        
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.filteredPhotosList = self.photosList
         }
     }
     
@@ -210,8 +229,10 @@ extension ViewController: PopUpModalDelegate {
         switch context {
         case .rover:
             roverName = value
+            filterBasedOnSelection()
         case .camera:
             cameraName = value
+            filterBasedOnSelection()
         case .date :
             apiManager.fetchPhotos(date: value)
             roverName = "All"
@@ -221,11 +242,6 @@ extension ViewController: PopUpModalDelegate {
             // Handle or ignore
             break
         }
-    }
-    
-    func didTapAccept(selectedValue: String?) {
-        guard let filter = selectedValue else { return }
-        print(filter)
     }
     
     func didTapCancel() {
