@@ -184,11 +184,8 @@ class ViewController: UIViewController {
     
 }
 
-
-// MARK: - UITableViewDelegate
-
-extension ViewController: UITableViewDelegate {
-    
+// MARK: - UITableViewDataSource + UITableViewDelegate
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let url = filteredPhotosList[indexPath.row].img_src
@@ -201,9 +198,7 @@ extension ViewController: UITableViewDelegate {
         self.present(fullScreenVC, animated: true, completion: nil)
         
     }
-}
-// MARK: - UITableViewDataSource
-extension ViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredPhotosList.count
     }
@@ -274,6 +269,8 @@ extension ViewController: PopUpModalDelegate {
         self.dismiss(animated: true)
     }
 }
+
+// MARK: - NotificationCenter
 
 extension Notification.Name {
     static let useFilterFromHistory = Notification.Name(Constants.NotificationCenter.name)

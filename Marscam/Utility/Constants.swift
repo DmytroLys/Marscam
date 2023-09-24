@@ -42,5 +42,16 @@ struct Constants {
         static let photos = "photos"
         static let filter = "filter"
     }
+    struct Colors {
+        static let accentOne = "accentOne"
+        static let backgroundOne = "backgroundOne"
+        static let layerOne = "layerOne"
+        static let layerTwo = "layerTwo"
+        static let systemThree = "systemThree"
+        static let systemTwo = "systemTwo"
+    }
+    struct LottieAnimation {
+        static let loader = "Loader_Test"
+    }
     
 }

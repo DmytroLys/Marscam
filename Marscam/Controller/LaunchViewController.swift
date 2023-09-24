@@ -41,7 +41,7 @@ class LaunchViewController: UIViewController {
         logoView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         logoView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         logoView.layer.cornerRadius = 30
-        logoView.backgroundColor = UIColor(named: "accentOne")
+       logoView.backgroundColor = UIColor(named: Constants.Colors.accentOne)
     }
     
    private func configureAnimation() {
@@ -74,6 +74,23 @@ extension LaunchViewController :APIManagerDelegate {
     }
     
     func didFailWithError(error: Error) {
-        printContent(error)
+        DispatchQueue.main.async {
+                
+                self.animationView?.stop()
+                
+                // Display an alert to the user
+                let alert = UIAlertController(title: "Error", message: "Failed to fetch photos. Please check your internet connection.You can enter in offline mode", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Open in offline mode", style: .default,handler: {_ in
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: Constants.Segues.goToViewController, sender: self)
+                }
+            }))
+                alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in
+                    self.apiManager.fetchPhotos() // Retrying
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
     }
 }
