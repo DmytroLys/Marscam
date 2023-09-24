@@ -153,7 +153,7 @@ class ViewController: UIViewController {
     }
     
     @objc func handleUseFilterFromHistory(_ notification: Notification) {
-        guard let userInfo = notification.userInfo, let photos = userInfo["photos"] as? [Photo], let filter = userInfo["filter"] as? FilterHistory else { return }
+        guard let userInfo = notification.userInfo, let photos = userInfo[Constants.NotificationCenter.photos] as? [Photo], let filter = userInfo[Constants.NotificationCenter.filter] as? FilterHistory else { return }
         
         self.photosList = photos
         self.filteredPhotosList = photosList
@@ -276,6 +276,6 @@ extension ViewController: PopUpModalDelegate {
 }
 
 extension Notification.Name {
-    static let useFilterFromHistory = Notification.Name("useFilterFromHistory")
+    static let useFilterFromHistory = Notification.Name(Constants.NotificationCenter.name)
 }
 

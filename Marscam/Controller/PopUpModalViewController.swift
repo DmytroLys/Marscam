@@ -187,6 +187,8 @@ public final class PopUpModalViewController: UIViewController {
     
     func setupDatePickerView() {
         canvas.addSubview(datePicker)
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.locale = Locale(identifier: "en_US")
         
         NSLayoutConstraint.activate([
             canvas.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),

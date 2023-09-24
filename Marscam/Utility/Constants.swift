@@ -37,4 +37,10 @@ struct Constants {
         static let cellReuseIdentifier = "ReusableCell"
     }
     
+    struct NotificationCenter {
+        static let name = "useFilterFromHistory"
+        static let photos = "photos"
+        static let filter = "filter"
+    }
+    
 }
