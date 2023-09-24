@@ -63,6 +63,4 @@ struct APIManager {
             return nil
         }
     }
-    
-    
 }
