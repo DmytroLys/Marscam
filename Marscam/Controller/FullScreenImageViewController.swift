@@ -28,7 +28,7 @@ class FullScreenImageViewController: UIViewController {
     // MARK: - Lifecycle method
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "layerOne")
+        view.backgroundColor = .black
         cofigureImageView()
         configureButton()
     }
@@ -44,7 +44,7 @@ class FullScreenImageViewController: UIViewController {
         backButton = UIButton()
         
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        backButton.setImage(UIImage(named: "close"), for: .normal)
+        backButton.setImage(UIImage(named: "closeWhite"), for: .normal)
         view.addSubview(backButton)
         
         backButton.heightAnchor.constraint(equalToConstant: 44).isActive = true

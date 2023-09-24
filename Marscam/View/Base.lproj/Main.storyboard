@@ -54,6 +54,9 @@
                                                 <color key="backgroundColor" name="accentOne"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="dateFilterTapped:" destination="D6W-81-y32" eventType="touchUpInside" id="EHb-Zo-vFc"/>
+                                                </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" translatesAutoresizingMaskIntoConstraints="NO" id="Ebh-7g-zMU">
                                                 <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
@@ -304,7 +307,9 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="cameraNameLabel" destination="E71-ug-yjP" id="vzb-Vb-9FL"/>
                         <outlet property="dateLabel" destination="ETR-Y3-lJV" id="AAR-CN-DKl"/>
+                        <outlet property="roverNameLabel" destination="jnd-bI-J0g" id="j9V-FK-KKN"/>
                         <outlet property="tableView" destination="FT0-pn-62t" id="eRf-PU-Ovl"/>
                         <segue destination="NnB-Wm-Y3o" kind="presentation" identifier="goToHistory" modalPresentationStyle="fullScreen" id="M6a-z0-d0K"/>
                     </connections>

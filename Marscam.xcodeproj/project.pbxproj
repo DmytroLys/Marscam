@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		662806852AC05821004005FE /* PopUpModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662806842AC05821004005FE /* PopUpModalViewController.swift */; };
 		664ED3442ABD915300DA520A /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664ED3432ABD915300DA520A /* HistoryViewController.swift */; };
 		664ED3472ABDA34E00DA520A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 664ED3462ABDA34E00DA520A /* Realm */; };
 		664ED3492ABDA34E00DA520A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 664ED3482ABDA34E00DA520A /* RealmSwift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		662806842AC05821004005FE /* PopUpModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpModalViewController.swift; sourceTree = "<group>"; };
 		664ED3432ABD915300DA520A /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		664ED34A2ABDAF1200DA520A /* FilterHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHistoryModel.swift; sourceTree = "<group>"; };
 		664ED34C2ABDC42900DA520A /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				66B5C00B2ABCD3A700838570 /* APIManager */,
 				66B8F8412ABB261900B79083 /* Controller */,
 				66B8F8402ABB260B00B79083 /* View */,
+				66B5C0102ABCEB6900838570 /* Extensions */,
 				66B8F83F2ABB260100B79083 /* Model */,
 				66B8F8382ABB25A300B79083 /* Info.plist */,
 				66B8F8492ABB320000B79083 /* Loader_Test.json */,
@@ -152,7 +155,6 @@
 				66B8F8542ABC2F7500B79083 /* ImageCell.xib */,
 				664ED34C2ABDC42900DA520A /* FilterTableViewCell.swift */,
 				664ED34D2ABDC42900DA520A /* FilterTableViewCell.xib */,
-				66B5C0102ABCEB6900838570 /* Extensions */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -164,6 +166,7 @@
 				66B8F82B2ABB25A000B79083 /* ViewController.swift */,
 				6673474E2ABCF90000F36461 /* FullScreenImageViewController.swift */,
 				66B8F8452ABB2ED200B79083 /* LaunchViewController.swift */,
+				662806842AC05821004005FE /* PopUpModalViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				664ED3442ABD915300DA520A /* HistoryViewController.swift in Sources */,
 				66B5C00F2ABCEB6200838570 /* UIImageView.swift in Sources */,
 				66B5C0052ABCC66200838570 /* Constants.swift in Sources */,
+				662806852AC05821004005FE /* PopUpModalViewController.swift in Sources */,
 				6673474F2ABCF90000F36461 /* FullScreenImageViewController.swift in Sources */,
 				66B8F82A2ABB25A000B79083 /* SceneDelegate.swift in Sources */,
 				664ED34B2ABDAF1200DA520A /* FilterHistoryModel.swift in Sources */,

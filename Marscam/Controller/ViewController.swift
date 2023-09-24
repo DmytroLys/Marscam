@@ -14,17 +14,17 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    let datePicker = UIDatePicker()
+    
     
     private var roverName: String = "All" {
         didSet {
-            
+            roverNameLabel.text = roverName
         }
     }
     
     private var cameraName: String = "All" {
         didSet {
-            
+            cameraNameLabel.text = cameraName
         }
     }
     
@@ -36,6 +36,9 @@ class ViewController: UIViewController {
     
     
     @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var roverNameLabel: UILabel!
+    @IBOutlet private weak var cameraNameLabel: UILabel!
+    
     private var apiManager = APIManager()
     var photosList: [Photo] = []
     
@@ -53,12 +56,30 @@ class ViewController: UIViewController {
     
     
     @IBAction func roverFilterTapped(_ sender: UIButton) {
+        let modalVC = PopUpModalViewController.present(initialView: self, delegate: self)
+            modalVC.pickerData = ["All","Curiosity", "Opportunity", "Spirit"]
+            modalVC.modalTitle = "Rover"
+            modalVC.context = .rover
         
     }
     
     @IBAction func cameraFilterTapped(_ sender: UIButton) {
+        let modalVC = PopUpModalViewController.present(initialView: self, delegate: self)
+        modalVC.pickerData = ["All","Front Hazard Avoidance Camera", "Rear Hazard Avoidance Camera", "Mast Camera", "Chemistry and Camera Complex", "Mars Hand Lens Imager", "Mars Descent Imager", "Navigation Camera", "Panoramic Camera","Miniature Thermal Emission Spectrometer (Mini-TES)"]
+        modalVC.modalTitle = "Camera"
+        modalVC.context = .camera
+    }
+    
+    @IBAction func dateFilterTapped(_ sender: UIButton) {
         
     }
+    
+    func setView(view: UIView, hidden: Bool) {
+        UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            view.isHidden = hidden
+        })
+    }
+    
     
     private func convertDateString(_ input: String) -> String? {
         let inputFormatter = DateFormatter()
@@ -88,7 +109,7 @@ class ViewController: UIViewController {
         let history = FilterHistory()
         history.date = dateLabel.text!
         history.roverName = roverName
-        history.cameraName = roverName
+        history.cameraName = cameraName
         
         let realm = try! Realm()
         
@@ -108,7 +129,6 @@ class ViewController: UIViewController {
             let realm = try! Realm()
             
             let filterHistory = realm.objects(FilterHistory.self)
-            
             
             let arrayFilters = Array(filterHistory)
             
@@ -177,5 +197,37 @@ extension ViewController : APIManagerDelegate {
     func didFailWithError(error: Error) {
         print(error.localizedDescription)
     }
+}
+
+// MARK: - PopUpModalDelegate
+
+extension ViewController: PopUpModalDelegate {
+    func didTapAccept(selectedValue: String?, context: PickerContext?) {
+        guard let value = selectedValue else { return }
+
+            switch context {
+            case .rover:
+                roverName = value
+            case .camera:
+                cameraName = value
+            case .none:
+                // Handle or ignore
+                break
+            }
+    }
+    
+    
+    func didTapAccept(selectedValue: String?) {
+        guard let filter = selectedValue else { return }
+        print(filter)
+    }
+    
+    func didTapCancel() {
+        self.dismiss(animated: true)
+    }
+    
+    
+    
+    
 }
 
