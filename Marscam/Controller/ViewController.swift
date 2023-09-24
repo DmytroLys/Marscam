@@ -83,13 +83,15 @@ class ViewController: UIViewController {
     }
     
     func filterBasedOnSelection() {
-        if roverName != "All" {
-            filteredPhotosList = photosList.filter({ $0.rover.name == roverName })
-        } else if cameraName != "All" {
-            filteredPhotosList = photosList.filter({ $0.camera.full_name == cameraName })
-        } else {
-            filteredPhotosList = photosList
-        }
+        filteredPhotosList = photosList
+
+            if roverName != "All" {
+                filteredPhotosList = filteredPhotosList.filter({ $0.rover.name == roverName })
+            }
+
+            if cameraName != "All" {
+                filteredPhotosList = filteredPhotosList.filter({ $0.camera.full_name == cameraName })
+            }
     }
     
     func setView(view: UIView, hidden: Bool) {
