@@ -25,7 +25,7 @@ class LaunchViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToMain" {
+        if segue.identifier == Constants.Segues.goToViewController {
             let destinationVC = segue.destination as? ViewController
             destinationVC?.photosList = photosList
         }
@@ -69,7 +69,7 @@ extension LaunchViewController :APIManagerDelegate {
         photosList = photos
         
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "goToMain", sender: self)
+            self.performSegue(withIdentifier: Constants.Segues.goToViewController, sender: self)
         }
     }
     

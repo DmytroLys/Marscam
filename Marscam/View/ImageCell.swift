@@ -49,7 +49,7 @@ class ImageCell: UITableViewCell {
     }
     
     func setImageView(url:URL) {
-        photo.loadImage(from: url)
+        photo.kf.setImage(with: url)
     }
     
     private func returnAttributedStringWithTitle(with title: String, type: String) -> NSMutableAttributedString {

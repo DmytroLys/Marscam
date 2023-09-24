@@ -22,7 +22,7 @@ class HistoryViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.register(UINib(nibName: "FilterTableViewCell", bundle: nil), forCellReuseIdentifier: "HistoryCell")
+        tableView.register(UINib(nibName: Constants.FilterTableViewCell.name, bundle: nil), forCellReuseIdentifier: Constants.FilterTableViewCell.cellReuseIdentifier)
         
     }
     @IBAction func backButton(_ sender: UIButton) {
@@ -74,7 +74,7 @@ extension HistoryViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell",for: indexPath) as! FilterTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.FilterTableViewCell.cellReuseIdentifier,for: indexPath) as! FilterTableViewCell
         
         let cellDate = filtersHistoryList[indexPath.row].date
         let cellRoverName = filtersHistoryList[indexPath.row].roverName

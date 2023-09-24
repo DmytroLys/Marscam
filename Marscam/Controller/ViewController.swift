@@ -7,14 +7,13 @@
 
 import UIKit
 import RealmSwift
+import Kingfisher
 
 class ViewController: UIViewController {
     
     // MARK: - Properties
     
     @IBOutlet private weak var tableView: UITableView!
-    
-    
     
     
     private var roverName: String = "All" {
@@ -49,7 +48,7 @@ class ViewController: UIViewController {
         apiManager.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "ImageCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
+        tableView.register(UINib(nibName: Constants.ImageCell.name, bundle: nil), forCellReuseIdentifier: Constants.ImageCell.cellReuseIdentifier)
         tableView.separatorStyle = .none
         
     }
@@ -57,14 +56,14 @@ class ViewController: UIViewController {
     
     @IBAction func roverFilterTapped(_ sender: UIButton) {
         let modalVC =  PopUpModalViewController.present(initialView: self, delegate: self, style: .filter)
-        modalVC.pickerData = ["All","Curiosity", "Opportunity", "Spirit"]
+        modalVC.pickerData = Constants.PickerData.roverData
         modalVC.modalTitle = "Rover"
         modalVC.context = .rover
     }
     
     @IBAction func cameraFilterTapped(_ sender: UIButton) {
         let modalVC = PopUpModalViewController.present(initialView: self, delegate: self, style: .filter)
-        modalVC.pickerData = ["All","Front Hazard Avoidance Camera", "Rear Hazard Avoidance Camera", "Mast Camera", "Chemistry and Camera Complex", "Mars Hand Lens Imager", "Mars Descent Imager", "Navigation Camera", "Panoramic Camera","Miniature Thermal Emission Spectrometer (Mini-TES)"]
+        modalVC.pickerData = Constants.PickerData.cameraData
         modalVC.modalTitle = "Camera"
         modalVC.context = .camera
     }
@@ -99,16 +98,16 @@ class ViewController: UIViewController {
     @IBAction func addHistoryTapped(_ sender: UIButton) {
         
         let ac = UIAlertController(title: "Save Filters", message: "The current filters and the date you have chosen can be saved to the filter history.", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: saveFunction))
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: handleSaveFilterHistory))
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(ac,animated: true)
     }
     
-    func saveFunction(action: UIAlertAction) {
+    func handleSaveFilterHistory(action: UIAlertAction) {
         
         let history = FilterHistory()
-        history.date = dateLabel.text!
+        history.date = dateLabel.text ?? ""
         history.roverName = roverName
         history.cameraName = cameraName
         
@@ -120,11 +119,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func goToHistoryTapped(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "goToHistory", sender: self)
+        self.performSegue(withIdentifier: Constants.Segues.goToHistoryController, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToHistory" {
+        if segue.identifier == Constants.Segues.goToHistoryController {
             let destinationVC = segue.destination as? HistoryViewController
             
             let realm = try! Realm()
@@ -151,7 +150,7 @@ extension ViewController: UITableViewDelegate {
         let url = photosList[indexPath.row].img_src
         
         let imageView = UIImageView()
-        imageView.loadImage(from: url)
+        imageView.kf.setImage(with: url)
         let fullScreenVC = FullScreenImageViewController(imageView: imageView)
         fullScreenVC.modalPresentationStyle = .overFullScreen
         fullScreenVC.modalPresentationCapturesStatusBarAppearance = true
@@ -162,12 +161,11 @@ extension ViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(photosList.count)
         return photosList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! ImageCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ImageCell.cellReuseIdentifier, for: indexPath) as! ImageCell
         
         let cellRoverName = photosList[indexPath.row].rover.name
         let cellCameraType = photosList[indexPath.row].camera.full_name
@@ -216,13 +214,14 @@ extension ViewController: PopUpModalDelegate {
             cameraName = value
         case .date :
             apiManager.fetchPhotos(date: value)
+            roverName = "All"
+            cameraName = "All"
             date = value
         case .none:
             // Handle or ignore
             break
         }
     }
-    
     
     func didTapAccept(selectedValue: String?) {
         guard let filter = selectedValue else { return }
