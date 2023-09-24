@@ -11,10 +11,15 @@ public protocol PopUpModalDelegate : AnyObject {
     func didTapCancel()
     func didTapAccept(selectedValue: String?, context: PickerContext?)
 }
- 
+
 public enum PickerContext {
     case rover
     case camera
+    case date
+}
+public enum ModalStyle {
+    case filter
+    case date
 }
 
 public final class PopUpModalViewController: UIViewController {
@@ -23,10 +28,18 @@ public final class PopUpModalViewController: UIViewController {
     
     public weak var delegate: PopUpModalDelegate?
     public var context: PickerContext?
+    public var modalStyle: ModalStyle = .filter
     
-    private lazy var pickerView: UIPickerView = {
+    private lazy var filterPicker: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+    
+    private lazy var datePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.datePickerMode = .date
         return picker
     }()
     
@@ -52,7 +65,7 @@ public final class PopUpModalViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapOK), for: .touchUpInside)
         return button
     }()
-
+    
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -70,7 +83,7 @@ public final class PopUpModalViewController: UIViewController {
     
     public var pickerData: [String] = [] {
         didSet {
-            pickerView.reloadAllComponents()
+            filterPicker.reloadAllComponents()
         }
     }
     
@@ -89,8 +102,8 @@ public final class PopUpModalViewController: UIViewController {
     // MARK: - Lifecycle
     public override func viewDidLoad() {
         super.viewDidLoad()
-        pickerView.delegate = self
-        pickerView.dataSource = self
+        filterPicker.delegate = self
+        filterPicker.dataSource = self
         setupViews()
     }
     
@@ -102,8 +115,9 @@ public final class PopUpModalViewController: UIViewController {
     }
     
     @discardableResult
-    static public func present(initialView: UIViewController, delegate: PopUpModalDelegate) -> PopUpModalViewController {
+    static public func present(initialView: UIViewController, delegate: PopUpModalDelegate, style: ModalStyle) -> PopUpModalViewController {
         let view = PopUpModalViewController.create(delegate: delegate)
+        view.modalStyle = style
         view.modalPresentationStyle = .overFullScreen
         view.modalTransitionStyle = .coverVertical
         initialView.present(view, animated: true)
@@ -115,9 +129,20 @@ public final class PopUpModalViewController: UIViewController {
     }
     
     @objc func didTapOK() {
-        let selectedValue = pickerData[pickerView.selectedRow(inComponent: 0)]
-            delegate?.didTapAccept(selectedValue: selectedValue, context: context)
+        if modalStyle == .filter {
+                let selectedValue = pickerData[filterPicker.selectedRow(inComponent: 0)]
+                delegate?.didTapAccept(selectedValue: selectedValue, context: context)
+            } else if modalStyle == .date {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                let selectedDate = dateFormatter.string(from: datePicker.date)
+                delegate?.didTapAccept(selectedValue: selectedDate, context: .date)
+            }
             self.dismiss(animated: true, completion: nil)
+        
+        
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - UI Configuration
@@ -132,14 +157,10 @@ public final class PopUpModalViewController: UIViewController {
         cancelButton.setImage(cancelImage, for: .normal)
         canvas.addSubview(cancelButton)
         canvas.addSubview(applyButton)
-        canvas.addSubview(pickerView)
+        canvas.addSubview(filterPicker)
         canvas.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
-            canvas.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            canvas.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            canvas.widthAnchor.constraint(equalToConstant: self.view.bounds.width ),
-            canvas.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.35),
             cancelButton.heightAnchor.constraint(equalToConstant: 44),
             cancelButton.widthAnchor.constraint(equalToConstant: 44),
             cancelButton.topAnchor.constraint(equalTo: canvas.topAnchor, constant: 20),
@@ -148,14 +169,53 @@ public final class PopUpModalViewController: UIViewController {
             applyButton.widthAnchor.constraint(equalToConstant: 44),
             applyButton.topAnchor.constraint(equalTo: canvas.topAnchor, constant: 20),
             applyButton.trailingAnchor.constraint(equalTo: canvas.trailingAnchor, constant: -20),
-            pickerView.topAnchor.constraint(equalTo: canvas.topAnchor, constant: 60),
-            pickerView.leftAnchor.constraint(equalTo: canvas.leftAnchor, constant: 20),
-            pickerView.rightAnchor.constraint(equalTo: canvas.rightAnchor, constant: -20),
-            pickerView.bottomAnchor.constraint(equalTo: canvas.bottomAnchor, constant: -8),
+            filterPicker.topAnchor.constraint(equalTo: canvas.topAnchor, constant: 60),
+            filterPicker.leftAnchor.constraint(equalTo: canvas.leftAnchor, constant: 20),
+            filterPicker.rightAnchor.constraint(equalTo: canvas.rightAnchor, constant: -20),
+            filterPicker.bottomAnchor.constraint(equalTo: canvas.bottomAnchor, constant: -8),
             titleLabel.topAnchor.constraint(equalTo: canvas.topAnchor, constant: 28),
             titleLabel.centerXAnchor.constraint(equalTo: canvas.centerXAnchor)
         ])
+        
+        if modalStyle == .date {
+            setupDatePickerView()
+        } else if modalStyle == .filter {
+            setupFilterPickerView()
+        }
+        
     }
+    
+    func setupDatePickerView() {
+        canvas.addSubview(datePicker)
+        
+        NSLayoutConstraint.activate([
+            canvas.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            canvas.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            canvas.widthAnchor.constraint(equalToConstant: self.view.bounds.width * 0.9),
+            canvas.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.35),
+            datePicker.topAnchor.constraint(equalTo: canvas.topAnchor, constant: 60),
+            datePicker.leftAnchor.constraint(equalTo: canvas.leftAnchor, constant: 20),
+            datePicker.rightAnchor.constraint(equalTo: canvas.rightAnchor, constant: -20),
+            datePicker.bottomAnchor.constraint(equalTo: canvas.bottomAnchor, constant: -8),
+        ])
+    }
+    
+    func setupFilterPickerView() {
+        canvas.addSubview(filterPicker)
+        
+        NSLayoutConstraint.activate([
+            canvas.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            canvas.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            canvas.widthAnchor.constraint(equalToConstant: self.view.bounds.width ),
+            canvas.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.35),
+            filterPicker.topAnchor.constraint(equalTo: canvas.topAnchor, constant: 60),
+            filterPicker.leftAnchor.constraint(equalTo: canvas.leftAnchor, constant: 20),
+            filterPicker.rightAnchor.constraint(equalTo: canvas.rightAnchor, constant: -20),
+            filterPicker.bottomAnchor.constraint(equalTo: canvas.bottomAnchor, constant: -8),
+        ])
+        
+    }
+    
 }
 
 // MARK: - Extensions

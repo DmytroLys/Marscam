@@ -22,7 +22,9 @@ struct APIManager {
         
     }
     func fetchPhotos (date: String) {
-        let urlString = ""
+        let apiData = Constants.API.earthDate + "\(date)&page=1"
+        let urlString = Constants.API.apiURL + apiData + Constants.API.apiKey
+        print(urlString)
         performRequest(with: urlString)
     }
     

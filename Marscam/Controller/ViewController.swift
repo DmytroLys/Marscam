@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     
     
     
+    
     private var roverName: String = "All" {
         didSet {
             roverNameLabel.text = roverName
@@ -30,16 +31,16 @@ class ViewController: UIViewController {
     
     private var date: String = "" {
         didSet {
-            dateLabel.text = date
+            dateLabel.text = convertDateString(date)
         }
     }
-    
     
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var roverNameLabel: UILabel!
     @IBOutlet private weak var cameraNameLabel: UILabel!
     
     private var apiManager = APIManager()
+    private var 
     var photosList: [Photo] = []
     
     override func viewDidLoad() {
@@ -56,22 +57,23 @@ class ViewController: UIViewController {
     
     
     @IBAction func roverFilterTapped(_ sender: UIButton) {
-        let modalVC = PopUpModalViewController.present(initialView: self, delegate: self)
-            modalVC.pickerData = ["All","Curiosity", "Opportunity", "Spirit"]
-            modalVC.modalTitle = "Rover"
-            modalVC.context = .rover
-        
+        let modalVC =  PopUpModalViewController.present(initialView: self, delegate: self, style: .filter)
+        modalVC.pickerData = ["All","Curiosity", "Opportunity", "Spirit"]
+        modalVC.modalTitle = "Rover"
+        modalVC.context = .rover
     }
     
     @IBAction func cameraFilterTapped(_ sender: UIButton) {
-        let modalVC = PopUpModalViewController.present(initialView: self, delegate: self)
+        let modalVC = PopUpModalViewController.present(initialView: self, delegate: self, style: .filter)
         modalVC.pickerData = ["All","Front Hazard Avoidance Camera", "Rear Hazard Avoidance Camera", "Mast Camera", "Chemistry and Camera Complex", "Mars Hand Lens Imager", "Mars Descent Imager", "Navigation Camera", "Panoramic Camera","Miniature Thermal Emission Spectrometer (Mini-TES)"]
         modalVC.modalTitle = "Camera"
         modalVC.context = .camera
     }
     
     @IBAction func dateFilterTapped(_ sender: UIButton) {
-        
+        let modalVC = PopUpModalViewController.present(initialView: self, delegate: self, style: .date)
+        modalVC.modalTitle = "Date"
+        modalVC.context = .date
     }
     
     func setView(view: UIView, hidden: Bool) {
@@ -100,7 +102,7 @@ class ViewController: UIViewController {
         let ac = UIAlertController(title: "Save Filters", message: "The current filters and the date you have chosen can be saved to the filter history.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Save", style: .default, handler: saveFunction))
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-    
+        
         present(ac,animated: true)
     }
     
@@ -161,6 +163,7 @@ extension ViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(photosList.count)
         return photosList.count
     }
     
@@ -188,6 +191,7 @@ extension ViewController: UITableViewDataSource {
 extension ViewController : APIManagerDelegate {
     
     func didUpdatePhotos(_ apiManager: APIManager, photos: [Photo]) {
+    
         photosList = photos
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -195,6 +199,7 @@ extension ViewController : APIManagerDelegate {
     }
     
     func didFailWithError(error: Error) {
+        
         print(error.localizedDescription)
     }
 }
@@ -204,16 +209,19 @@ extension ViewController : APIManagerDelegate {
 extension ViewController: PopUpModalDelegate {
     func didTapAccept(selectedValue: String?, context: PickerContext?) {
         guard let value = selectedValue else { return }
-
-            switch context {
-            case .rover:
-                roverName = value
-            case .camera:
-                cameraName = value
-            case .none:
-                // Handle or ignore
-                break
-            }
+        
+        switch context {
+        case .rover:
+            roverName = value
+        case .camera:
+            cameraName = value
+        case .date :
+            apiManager.fetchPhotos(date: value)
+            date = value
+        case .none:
+            // Handle or ignore
+            break
+        }
     }
     
     
@@ -225,9 +233,5 @@ extension ViewController: PopUpModalDelegate {
     func didTapCancel() {
         self.dismiss(animated: true)
     }
-    
-    
-    
-    
 }
 
