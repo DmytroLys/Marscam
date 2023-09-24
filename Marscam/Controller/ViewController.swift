@@ -58,6 +58,7 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: Constants.ImageCell.name, bundle: nil), forCellReuseIdentifier: Constants.ImageCell.cellReuseIdentifier)
         tableView.separatorStyle = .none
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUseFilterFromHistory(_:)), name: .useFilterFromHistory, object: nil)
         
     }
     
@@ -131,11 +132,34 @@ class ViewController: UIViewController {
         history.roverName = roverName
         history.cameraName = cameraName
         
+        let photos = filteredPhotosList
+        let photosRealm = photos.map { photo -> PhotoRealm in
+            let photoRealm = PhotoRealm()
+            
+            photoRealm.imageURL = photo.img_src.absoluteString
+            photoRealm.date = photo.earth_date
+            photoRealm.cameraName = photo.camera.full_name
+            photoRealm.roverName = photo.rover.name
+            return photoRealm
+        }
+        
+        history.photos.append(objectsIn: photosRealm)
+        
         let realm = try! Realm()
         
         try! realm.write {
             realm.add(history)
         }
+    }
+    
+    @objc func handleUseFilterFromHistory(_ notification: Notification) {
+        guard let userInfo = notification.userInfo, let photos = userInfo["photos"] as? [Photo], let filter = userInfo["filter"] as? FilterHistory else { return }
+        
+        self.photosList = photos
+        self.filteredPhotosList = photosList
+        
+        self.cameraName = filter.cameraName
+        self.roverName = filter.roverName
     }
     
     @IBAction func goToHistoryTapped(_ sender: UIButton) {
@@ -167,7 +191,7 @@ extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let url = photosList[indexPath.row].img_src
+        let url = filteredPhotosList[indexPath.row].img_src
         
         let imageView = UIImageView()
         imageView.kf.setImage(with: url)
@@ -249,5 +273,9 @@ extension ViewController: PopUpModalDelegate {
     func didTapCancel() {
         self.dismiss(animated: true)
     }
+}
+
+extension Notification.Name {
+    static let useFilterFromHistory = Notification.Name("useFilterFromHistory")
 }
 

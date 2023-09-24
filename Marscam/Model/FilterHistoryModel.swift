@@ -14,5 +14,15 @@ class FilterHistory: Object {
     @Persisted var roverName: String = ""
     @Persisted var cameraName: String = ""
     @Persisted var date: String = ""
-    
+    @Persisted var photos: List<PhotoRealm>
 }
+
+class PhotoRealm: Object {
+    
+    @Persisted var roverName: String = ""
+    @Persisted var cameraName: String = ""
+    @Persisted var date: String = ""
+    @Persisted var imageURL: String = ""
+}
+
+

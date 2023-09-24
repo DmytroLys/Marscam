@@ -10,7 +10,11 @@ import RealmSwift
 
 class HistoryViewController: UIViewController {
     
-    var filtersHistoryList : [FilterHistory] = []
+    var filtersHistoryList : [FilterHistory] = [] {
+        didSet {
+            return filtersHistoryList.reverse()
+        }
+    }
     
     @IBOutlet weak var emptyHistoryImage: UIImageView!
     
@@ -48,7 +52,32 @@ class HistoryViewController: UIViewController {
     }
     
     private func useData(action: UIAlertAction) {
-        
+        guard let indexPath = self.tableView.indexPathForSelectedRow else { return }
+            let selectedFilter = filtersHistoryList[indexPath.row]
+            
+        let photos = Array(selectedFilter.photos).compactMap { photoRealm -> Photo? in
+            
+            guard let url = URL(string: photoRealm.imageURL) else {
+                    print("Failed to create URL from string: \(photoRealm.imageURL)")
+                    return nil
+                }
+            
+            let dummyCamera = Camera(name: photoRealm.cameraName, full_name: photoRealm.cameraName)
+            let dummyRover = Rover(name: photoRealm.roverName)
+            
+            
+            
+            return Photo(
+                camera: dummyCamera,
+                img_src: url,
+                earth_date: photoRealm.date,
+                rover: dummyRover
+            )
+        }
+            print(photos)
+            
+            NotificationCenter.default.post(name: .useFilterFromHistory, object: nil, userInfo: ["photos": photos, "filter": selectedFilter])
+        self.dismiss(animated: true)
     }
     
 }
