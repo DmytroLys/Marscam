@@ -107,6 +107,15 @@ public final class PopUpModalViewController: UIViewController {
         setupViews()
     }
     
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIView.animate(withDuration: 0.2) {
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        }
+        
+    }
+    
     // MARK: - Methods
     
     public static func create(delegate: PopUpModalDelegate) -> PopUpModalViewController {
@@ -148,7 +157,7 @@ public final class PopUpModalViewController: UIViewController {
     // MARK: - UI Configuration
     
     private func setupViews() {
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         view.addSubview(canvas)
         
         let okImage = UIImage(named: "tick")?.withRenderingMode(.alwaysOriginal)
@@ -185,7 +194,7 @@ public final class PopUpModalViewController: UIViewController {
         
     }
     
-    func setupDatePickerView() {
+  private  func setupDatePickerView() {
         canvas.addSubview(datePicker)
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.locale = Locale(identifier: "en_US")
@@ -202,7 +211,7 @@ public final class PopUpModalViewController: UIViewController {
         ])
     }
     
-    func setupFilterPickerView() {
+   private func setupFilterPickerView() {
         canvas.addSubview(filterPicker)
         
         NSLayoutConstraint.activate([
